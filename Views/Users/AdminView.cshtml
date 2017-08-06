@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "AdminView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<WebApiAppTask.Models.User>
+<h2>AdminView</h2>
+<div>
+    Welcome Admin <span>@Html.ActionLink("Log Out", "Logout", "Users");</span>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+
+        </div>
+    </div>
+</div>
+
+<table id="datatable1">
+    <tr><th>Name</th>
+        <th>City</th>
+        <th>Country</th>
+        <th>Role</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr id="user-@item.Id">
+            <td style="display:none;">@item.Id</td>
+            <td>@item.UserName</td>
+            <td>@item.City</td>
+            <td>@item.Country</td>
+            <td>@(item.IsAdmin == true ? "Admin" : "User")</td>
+            <td><button onclick="EditUser('@item.Id','@item.UserName','@item.Country')" name="abc">Edit</button></td>
+        </tr>
+    
+
+    }
+</table>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update User</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <input type="hidden" value="" id="id" />
+                </div>
+                <div>
+                    <label>User Name</label>
+                    <input type="text" value="" id="username" />
+                </div>
+                <div>
+                    <label>Country</label>
+                    <input type="text" value="" id="country" />
+                </div>
+                <div>
+                    <label>Change Role</label>
+                    <select id="roles">
+                        <option value="true">Admin</option>
+                        <option value="false">User</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="UpdateandSave()">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function EditUser(ID, Name, Country) {
+        debugger;
+        var objUser = {
+            Ids: ID,
+            UserNames: Name,
+            Countrys: Country
+        }
+        $("#id").val(ID);
+        $("#username").val(Name);
+        $("#country").val(Country);
+        $("#myModal").modal('show');
+    }
+
+    function UpdateandSave() {
+        var id = $("#id").val();
+        var name = $("#username").val();
+        var country = $("#country").val();
+        var role = $("#roles").val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdateUser", "Users")',
+            data: JSON.stringify({ Id: id, name: name, country : country, role: role }),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+            }
+        });
+    }
+</script>
+

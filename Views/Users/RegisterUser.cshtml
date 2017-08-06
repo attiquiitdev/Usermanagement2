@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "RegisterUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model WebApiAppTask.Models.User  
+<h2>RegisterUser</h2>
+@using (Html.BeginForm("SaveUser", "Users", FormMethod.Post))
+{
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <label>User Name</label>
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @type = "text" })
+            </div>
+            <div class="col-md-12">
+                <label>Password</label>
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type = "password" })
+            </div>
+            <div class="col-md-12">
+                <label>Confirm Password</label>
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type = "password" })
+            </div>
+
+            <div class="col-md-12">
+                <label>Country</label>
+                @Html.TextBoxFor(m => m.Country, new { @class = "form-control", @type = "text" })
+            </div>
+
+            <div class="col-md-12">
+                <label>City</label>
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control", @type = "text" })
+            </div>
+
+            <div class="col-md-12">
+                <input type="submit" value="Login" />
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+}
+
